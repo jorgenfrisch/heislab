@@ -20,7 +20,6 @@ typedef enum {
 
 
 void elevio_init(void);
-
 void elevio_motorDirection(MotorDirection dirn);
 void elevio_buttonLamp(int floor, ButtonType button, int value);
 void elevio_floorIndicator(int floor);

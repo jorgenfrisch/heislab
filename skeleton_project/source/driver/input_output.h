@@ -11,12 +11,23 @@ struct IO{
     int orderFloor;
     bool stop;
     bool obstruction;
+    int recentFloor;
+    struct order* orders;
 };
 
-/* void setStop();
+void initializeIO(struct IO *io);
+void setStop();
 void setObstruction();
 void setOrderedDirection();
 void setOrderedFloor();
-void setFloorLight(int floor);
+void setOrders();
+void setFloorLights(struct IO *io);
+void setButtonLights(struct IO *io);
 
- */
+
+struct order{
+    int floor;
+    ButtonType button;
+};
+
+void initializeOrder(struct order *order);

@@ -34,6 +34,7 @@ void emergencyStop(void){
             elevio_motorDirection(DIRN_STOP);
     }
 }
+
 /* 
 void openDoor(...);
 void startUp(int timer);
