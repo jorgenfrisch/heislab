@@ -16,7 +16,7 @@ struct elevator {
     int timer;
 };
 
-void initializeElevator(struct elevator *elevator, int currentFloor);
+void initializeElevator(struct elevator *elevator);
 
 void moveTo(struct elevator *elevator, int target);
 
