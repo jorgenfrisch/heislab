@@ -20,18 +20,14 @@ int main(){
     initializeIO(&io);
     while(1){
        setFloorLights(&io);
-        moveTo(&ele, 2);
-        setOrders(&io, &ele); 
-        //printOrderArray(&io);
-
+        setOrders(&io, &ele);
        if(elevio_stopButton()){
             elevio_motorDirection(DIRN_STOP);
              break;
         }
-
-
         //nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
-    free(io.orderArray);
+    printOrderArray(&io);
+    freeOrderArray(&io);
     return 0;
 }

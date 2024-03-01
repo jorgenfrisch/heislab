@@ -14,6 +14,7 @@ struct elevator {
     bool doorOpen;
     int targetFloor;
     int timer;
+    int startFloor;
 };
 
 void initializeElevator(struct elevator *elevator);

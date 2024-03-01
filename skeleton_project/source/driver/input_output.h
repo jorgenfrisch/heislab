@@ -15,16 +15,16 @@ struct IO{
     struct order** orderArray;
     int size;
 };
-
-void initializeIO(struct IO *io);
-void setFloorLights(struct IO *io);
-void setButtonLights(struct IO *io, struct order *order, struct elevator *ele);
-void setOrders(struct IO *io, struct elevator *ele);
-void printOrderArray(struct IO *io);
-struct order* buttonCallback();
-
 struct order{
     int floor;
     ButtonType button;
 };
 
+void initializeIO(struct IO *io);
+void setFloorLights(struct IO *io);
+void setButtonLight(struct IO *io, struct order *order, struct elevator *ele);
+void turnOfButtonLight(struct IO *io, struct order *order, struct elevator *ele);
+void setOrders(struct IO *io, struct elevator *ele);
+struct order* buttonCallback();
+void printOrderArray(struct IO *io);
+void freeOrderArray(struct IO *io);
