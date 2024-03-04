@@ -1,48 +1,45 @@
-#include "elevator.h"
-#include "elevio.h"
 #include "input_output.h"
-#include "queue.h"
-
+#include "elevator.h"
 /* void setStop();
 void setObstruction();
 void setOrderedDirection();
 void setOrderedFloor();
 void setFloorLight(int floor); */
 
-void initializeIO(struct IO *io){
+void initializeIO(IO *io){
     io->size = 0;
     io->orderArray = NULL;
-    io->orderArray = (struct order*)malloc(io->size*sizeof(struct order));
+    io->orderArray = (order*)malloc(io->size*sizeof(order));
 }
 
-void setStop(struct IO *io){
+void setStop( IO *io){
     io->stop = elevio_stopButton();
 }
 
-void setObstruction(struct IO *io){
+void setObstruction( IO *io){
     io->obstruction = elevio_obstruction();
 }
 
-void setFloorLights(struct IO *io){
+void setFloorLights( IO *io){
    if(elevio_floorSensor()!=-1 && elevio_floorSensor()!=io->recentFloor){
     io->recentFloor = elevio_floorSensor();
     elevio_floorIndicator(io->recentFloor);
    }
 }
 //Is used to turn on button light when an order is placed
-void setButtonLight(struct IO *io, struct order *order, struct elevator *ele){
+void setButtonLight(IO *io, order *order, struct elevator *ele){
     elevio_buttonLamp(order->floor, order->button, 1);
 }
 //is used to turn of button light when a order is terminated 
-void turnOfButtonLight(struct IO *io, struct order *order, struct elevator *ele){
+void turnOfButtonLight(IO *io, order *order, struct elevator *ele){
     elevio_buttonLamp(order->floor, order->button, 0);
 }
-/* struct order* buttonCallback(){
+/* order* buttonCallback(){
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
             int btnPressed = elevio_callButton(f, b);
             if (btnPressed == 1){
-                struct order *buttonOrder = malloc(sizeof(struct order));
+                order *buttonOrder = malloc(sizeof(order));
                 buttonOrder->floor = f;
                 buttonOrder->button = b;
                 return buttonOrder;
@@ -52,23 +49,23 @@ void turnOfButtonLight(struct IO *io, struct order *order, struct elevator *ele)
     return NULL; // Add a return statement for the case when no button is pressed
 }
 
-void setOrders(struct IO *io, struct elevator *ele){
+void setOrders(IO *io, struct struct elevator *ele){
     if (buttonCallback() != NULL){
         setButtonLights(io, buttonCallback(), ele);
         io->size++;
-        io->orderArray = (struct order*) realloc(io->orderArray, io->size * sizeof(struct order));
+        io->orderArray = (order*) realloc(io->orderArray, io->size * sizeof(order));
         io->orderArray[io->size] = buttonCallback();
         
     }
 } */
 
 
-struct order* buttonCallback() {
+order* buttonCallback() {
     for (int f = 0; f < N_FLOORS; f++) {
         for (int b = 0; b < N_BUTTONS; b++) {
             int btnPressed = elevio_callButton(f, b);
             if (btnPressed == 1) {
-                struct order *buttonOrder = malloc(sizeof(struct order));
+                order *buttonOrder = malloc(sizeof(order));
                 if (buttonOrder != NULL) { // Check if malloc succeeded
                     buttonOrder->floor = f;
                     buttonOrder->button = b;
@@ -83,8 +80,8 @@ struct order* buttonCallback() {
     return NULL; // No button pressed, return NULL
 }
 
-void setOrders(struct IO *io, struct elevator *ele) {
-    struct order *newOrder = buttonCallback();
+void setOrders(IO *io, struct elevator *ele) {
+    order *newOrder = buttonCallback();
     if (newOrder != NULL) {
         for(int i = 0; i<io->size; i++){
         if(io->orderArray[i]->button==newOrder->button && io->orderArray[i]->floor==newOrder->floor){
@@ -94,7 +91,7 @@ void setOrders(struct IO *io, struct elevator *ele) {
     }
         setButtonLight(io, newOrder, ele);
         io->size++;
-        io->orderArray = realloc(io->orderArray, io->size * sizeof(struct order *));
+        io->orderArray = realloc(io->orderArray, io->size * sizeof(order *));
         if (io->orderArray != NULL) { // Check if realloc succeeded
             io->orderArray[io->size - 1] = newOrder; // Assign the pointer to the new order
         } else {
@@ -104,18 +101,18 @@ void setOrders(struct IO *io, struct elevator *ele) {
     }
 }
 
-void printOrderArray(struct IO *io) {
+void printOrderArray(IO *io) {
     printf("Printing orderArray:\n");
     for (size_t i = 0; i < io->size; i++) {
-        struct order *currentOrder = io->orderArray[i];
+        order *currentOrder = io->orderArray[i];
         printf("Order %zu: Floor: %d, Button: %d\n", i, currentOrder->floor, currentOrder->button);
     }
 }
 
 
-void freeOrderArray(struct IO *io) {
+void freeOrderArray(IO *io) {
     if (io->orderArray != NULL) {
-        // Free memory for each struct order pointer in orderArray
+        // Free memory for each order pointer in orderArray
         for (size_t i = 0; i < io->size; i++) {
             free(io->orderArray[i]);
         }

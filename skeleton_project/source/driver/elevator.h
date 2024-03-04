@@ -1,4 +1,4 @@
-
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -7,23 +7,23 @@
 #include "elevio.h"
 
 
-struct elevator {
+struct elevator{
     int currentFloor;
     MotorDirection motorDir;
-    bool isMoving;
     bool doorOpen;
     int targetFloor;
     int timer;
-    int startFloor;
+    int orderTaken;
+    int targetDirection;
 };
 
-void initializeElevator(struct elevator *elevator);
+void initializeElevator(struct elevator *ele);
 
-void moveTo(struct elevator *elevator, int target);
+
 
 /* void emergencyStop(void);
 void openDoor(...);
 void startUp(int timer);
 void stopButton();
-void initializeElevator(struct elevator *elevator, int currentFloor);
+void initializeElevator(elevator *elevator, int currentFloor);
  */

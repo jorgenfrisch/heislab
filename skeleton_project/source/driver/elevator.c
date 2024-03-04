@@ -1,8 +1,5 @@
 
 #include "elevator.h"
-#include "elevio.h"
-#include "input_output.h"
-
 
 int maxFloor = 3;
 int minFloor = 0;
@@ -13,7 +10,8 @@ void emergencyStop(void){
     }
 }
 
-void initializeElevator(struct elevator *elevator){
+void initializeElevator(struct elevator *ele){
+    ele->orderTaken=0;
     for(int i = 0; i < N_BUTTONS; i++){
         for(int y = 0; y<N_FLOORS; y++){
             elevio_buttonLamp(y,i,0);
@@ -27,11 +25,11 @@ void initializeElevator(struct elevator *elevator){
         }
     }
     elevio_motorDirection(DIRN_STOP);
-    elevator->currentFloor=elevio_floorSensor();
+    ele->currentFloor=elevio_floorSensor();
 }
 
 
-void moveTo(struct elevator *elevator, int target){
+/* void moveTo(elevator *elevator, int target){
     if(elevio_floorSensor()!=-1){
     elevator->currentFloor = elevio_floorSensor();
     }
@@ -44,7 +42,7 @@ void moveTo(struct elevator *elevator, int target){
     } 
     elevio_motorDirection(elevator->motorDir);
     emergencyStop();
-}
+} */
 
 
 /* 
