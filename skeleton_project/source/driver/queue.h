@@ -20,3 +20,4 @@
 // }
 
 void moveTo(struct elevator *ele, IO *io);
+void removeOrder(IO *io, int index);
