@@ -11,18 +11,16 @@ struct elevator{
     int currentFloor;
     MotorDirection motorDir;
     bool doorOpen;
-    int targetFloor;
     int timer;
-    int orderTaken;
-    int targetDirection;
+    bool obstruction;
 };
 
 void initializeElevator(struct elevator *ele);
-
+void doorOpens(struct elevator *ele);
+void setObstruction(struct elevator *ele);
 
 
 /* void emergencyStop(void);
-void openDoor(...);
 void startUp(int timer);
 void stopButton();
 void initializeElevator(elevator *elevator, int currentFloor);

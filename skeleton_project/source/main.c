@@ -16,9 +16,11 @@ int main(){
     IO io;
     initializeIO(&io);
     while(1){
+
         setFloorLights(&io);
         setOrders(&io, &ele);
         moveTo(&ele, &io);
+    
         if(elevio_stopButton()){
             elevio_motorDirection(DIRN_STOP);
              break;
@@ -28,3 +30,6 @@ int main(){
     freeOrderArray(&io); 
     return 0;
 }
+
+
+

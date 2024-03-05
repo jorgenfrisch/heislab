@@ -1,0 +1,32 @@
+/* void removeOrder(IO *io, int index) {
+    if (io == NULL || io->orderArray == NULL || io->size <= 0 || index < 0 || index >= io->size) {
+        // Invalid input or out-of-bounds index, return without doing anything
+        return;
+    }
+
+    // Free memory for the element to be removed
+    free(io->orderArray[index]);
+
+    // Shift elements to fill the gap created by removing the element
+    for (int i = index; i < io->size - 1; i++) {
+        io->orderArray[i] = io->orderArray[i + 1];
+    }
+
+    // Decrement the size of the array
+    io->size--;
+
+    // Resize the array
+    io->orderArray = realloc(io->orderArray, io->size * sizeof(order *));
+    /* if (temp == NULL && io->size > 0) {
+        // Reallocation failed, handle the error
+        fprintf(stderr, "Error: Memory reallocation failed in removeOrder\n");
+        // Consider rollback or error handling
+    } else {
+        // Update the array pointer with the new pointer
+        io->orderArray = temp;
+    } */
+
+
+    1.Stoppknappen skal lyse s˚a lenge denne er trykket inne. Den skal
+    slukkes straks knappen slippes
+    2. Heisdør
