@@ -11,6 +11,9 @@ void emergencyStop(void){
 }
 
 void initializeElevator(struct elevator *ele){
+    ele->obstruction = 0; //Kan endres
+    ele->doorOpen=0;
+    elevio_doorOpenLamp(0);
     for(int i = 0; i < N_BUTTONS; i++){
         for(int y = 0; y<N_FLOORS; y++){
             elevio_buttonLamp(y,i,0);
@@ -27,22 +30,19 @@ void initializeElevator(struct elevator *ele){
     ele->currentFloor=elevio_floorSensor();
 }
 
+void timerStart(struct elevator *ele){
+    ele->t = time(NULL);
+}
+
+int checkTimer(time_t clock, time_t t){
+    double time_since_start = difftime(clock, t);
+    return (time_since_start >= 3);
+}
+
 void doorOpens(struct elevator *ele){
-    struct timespec delay;
-    delay.tv_sec = 3;
-    delay.tv_nsec = 0;
-    elevio_doorOpenLamp(1);
     ele->doorOpen=1;
-    ele->motorDir = DIRN_STOP;
-    elevio_motorDirection(ele->motorDir);
-   /*  while(1){
-        if(ele->obstruction==0){
-            break;
-        }
-    } */
-    nanosleep(&delay,NULL);
-    ele->doorOpen=0;
-    elevio_doorOpenLamp(0);
+    timerStart(ele);
+    elevio_doorOpenLamp(1);
 }
 
 void setObstruction(struct elevator *ele){

@@ -10,15 +10,17 @@
 struct elevator{
     int currentFloor;
     MotorDirection motorDir;
-    bool doorOpen;
-    int timer;
+    int doorOpen;
+    time_t t;
+    time_t clock;
     bool obstruction;
 };
 
 void initializeElevator(struct elevator *ele);
 void doorOpens(struct elevator *ele);
 void setObstruction(struct elevator *ele);
-
+void timerStart(struct elevator *ele);
+int checkTimer(time_t clock, time_t t);
 
 /* void emergencyStop(void);
 void startUp(int timer);
