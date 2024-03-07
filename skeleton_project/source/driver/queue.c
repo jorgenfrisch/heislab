@@ -17,7 +17,7 @@ void removeOrder(IO *io, int index){
 
 void moveTo(struct elevator *ele, IO *io){
     ele->clock = time(NULL);
-    if(io->size >0){
+    if(io->size > 0){
     int target = io->orderArray[0]->floor;
     if(elevio_floorSensor()!=-1){
     ele->currentFloor = elevio_floorSensor();
@@ -63,7 +63,8 @@ void moveTo(struct elevator *ele, IO *io){
     } if (ele->currentFloor > target && ele->doorOpen==0){
         ele->motorDir = DIRN_DOWN;
         
-    } printf(" dooropen:%d ", ele->doorOpen);
+    } 
+
     if (ele->currentFloor == target && ele->doorOpen==0){
         ele->motorDir = DIRN_STOP;
         doorOpens(ele);
@@ -74,16 +75,16 @@ void moveTo(struct elevator *ele, IO *io){
                 removeOrder(io, i);
             }
         } 
-        printf(" dooropen2:%d checktimer : %d ", ele->doorOpen, checkTimer(ele->clock,ele->t) );
-    } if(ele->doorOpen == 1 && checkTimer(ele->clock,ele->t)){
-        elevio_doorOpenLamp(0);
-        ele->doorOpen=0;
-    }
-    printf(" dooropen3 :%d ", ele->doorOpen);
+        //printf(" dooropen2:%d checktimer : %d ", ele->doorOpen, checkTimer(ele->clock,ele->t) );
+    } 
+    //printf(" dooropen3 :%d ", ele->doorOpen);
     elevio_motorDirection(ele->motorDir);
     //printf(" %d : %d : %d", ele->clock, ele->t, checkTimer(ele->clock, ele->t));
     }
-    emergencyStop();
+    if(ele->doorOpen == 1 && checkTimer(ele->clock,ele->t)){
+        elevio_doorOpenLamp(0);
+        ele->doorOpen=0;
+    }
 }
 
 

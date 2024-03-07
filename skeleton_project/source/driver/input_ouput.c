@@ -82,3 +82,36 @@ void freeOrderArray(IO *io) {
     }
 }
 
+void stopButtonpressed(IO *io, struct elevator *ele){
+    if(elevio_floorSensor() != -1 && elevio_stopButton()){
+        freeOrderArray(io);
+        ele->doorOpen=1;
+        elevio_doorOpenLamp(1);
+        elevio_stopLamp(1);
+        ele->motorDir = DIRN_STOP;
+        elevio_motorDirection(ele->motorDir);
+        while(elevio_stopButton()){
+            printf("stop button:%d", elevio_stopButton());
+        }
+        elevio_stopLamp(0);
+        ele->t = time(NULL);
+        printf("Før while");
+        ele->clock = time(NULL);
+        while(!checkTimer(ele->clock,ele->t)){
+            ele->clock = time(NULL);
+        }
+        printf("Etter while");
+        elevio_doorOpenLamp(0);
+        ele->doorOpen=0;
+    }
+    if(elevio_stopButton() && elevio_floorSensor() == -1){
+        freeOrderArray(io);
+        ele->motorDir = DIRN_STOP;
+        elevio_motorDirection(ele->motorDir);
+        elevio_stopLamp(1);
+        while(elevio_stopButton()){
+            printf("stop button ikke i floor:%d", elevio_stopButton());
+        }
+        elevio_stopLamp(0);
+    }
+}

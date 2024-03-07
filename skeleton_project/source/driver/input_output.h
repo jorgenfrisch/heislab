@@ -17,8 +17,7 @@ typedef struct {
     bool floorLight;
     int orderDirection;
     int orderFloor;
-    bool stop;
-    bool obstruction;
+    int obstruction;
     int recentFloor;
     order** orderArray;
     int size;
@@ -32,3 +31,4 @@ void setOrders(IO *io, struct elevator *ele);
 order* buttonCallback();
 void printOrderArray(IO *io);
 void freeOrderArray(IO *io);
+void stopButtonpressed(IO *io, struct elevator *ele);
