@@ -21,14 +21,8 @@ int main(){
         setOrders(&io, &ele);
         moveTo(&ele, &io);
         setObstruction(&ele);
-    
-        // if(elevio_stopButton()){
-        //     elevio_motorDirection(DIRN_STOP);
-        //      break;
-        // }
         stopButtonpressed(&io, &ele);
     }
-    printOrderArray(&io);
     freeOrderArray(&io); 
     return 0;
 }

@@ -21,10 +21,6 @@ void initializeElevator(struct elevator *ele){
     }
     while(elevio_floorSensor()==-1){
         elevio_motorDirection(DIRN_UP);
-        if(elevio_stopButton()){
-            emergencyStop();
-            break;
-        }
     }
     elevio_motorDirection(DIRN_STOP);
     ele->currentFloor=elevio_floorSensor();

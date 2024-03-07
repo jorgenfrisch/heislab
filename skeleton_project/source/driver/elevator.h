@@ -14,6 +14,7 @@ struct elevator{
     time_t t;
     time_t clock;
     bool obstruction;
+    MotorDirection lastmotorDir;
 };
 
 void initializeElevator(struct elevator *ele);

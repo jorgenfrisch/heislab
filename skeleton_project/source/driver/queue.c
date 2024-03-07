@@ -25,7 +25,14 @@ void moveTo(struct elevator *ele, IO *io){
     int highest=target;
     int lowest=target;
     for (int i = 0; i<io->size; i++){
-        if(ele->currentFloor <= target && io->orderArray[i]->floor >= ele->currentFloor && io->orderArray[i]->floor < target && io->orderArray[i]->button == 0){
+        if(ele->currentFloor == target && ele->lastmotorDir == DIRN_DOWN){
+            ele->motorDir=DIRN_UP;
+        }
+        else if(ele->currentFloor == target && ele->lastmotorDir == DIRN_UP){
+            ele->motorDir=DIRN_DOWN;
+        }
+
+        else if(ele->currentFloor <= target && io->orderArray[i]->floor >= ele->currentFloor && io->orderArray[i]->floor < target && io->orderArray[i]->button == 0){
             if(io->orderArray[i]->floor < lowest){
                 lowest=io->orderArray[i]->floor;
             }
@@ -77,15 +84,10 @@ void moveTo(struct elevator *ele, IO *io){
                 turnOfButtonLight(io, io->orderArray[i], ele);
                 removeOrder(io, i);
                 i--;
-                printOrderArray(io);
-                printf("Target:%d", target);
             }
         } 
-        //printf(" dooropen2:%d checktimer : %d ", ele->doorOpen, checkTimer(ele->clock,ele->t) );
     } 
-    //printf(" dooropen3 :%d ", ele->doorOpen);
     elevio_motorDirection(ele->motorDir);
-    //printf(" %d : %d : %d", ele->clock, ele->t, checkTimer(ele->clock, ele->t));
     }
     if(ele->doorOpen == 1 && checkTimer(ele->clock,ele->t)){
         elevio_doorOpenLamp(0);
