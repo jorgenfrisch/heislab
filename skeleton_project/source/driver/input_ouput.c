@@ -93,7 +93,8 @@ void stopButtonpressed(IO *io, struct elevator *ele){
         ele->doorOpen=1;
         elevio_doorOpenLamp(1);
         elevio_stopLamp(1);
-        elevio_motorDirection(DIRN_STOP);
+        ele->motorDir = DIRN_STOP;
+        elevio_motorDirection(ele->motorDir);
         while(elevio_stopButton()){
         }
         elevio_stopLamp(0);
@@ -114,7 +115,8 @@ void stopButtonpressed(IO *io, struct elevator *ele){
         }
     }
         freeOrderArray(io);
-        elevio_motorDirection(DIRN_STOP);
+        ele->motorDir = DIRN_STOP;
+        elevio_motorDirection(ele->motorDir);
         elevio_stopLamp(1);
         while(elevio_stopButton()){
             printf("stop button ikke i floor:%d", elevio_stopButton());
