@@ -50,5 +50,8 @@ void setObstruction(struct elevator *ele){
         if(elevio_obstruction()){
             ele->obstruction=1;
         }
+        if(!elevio_obstruction()){
+            ele->obstruction=0;
+        }
     }
 }

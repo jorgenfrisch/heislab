@@ -20,6 +20,7 @@ int main(){
         setFloorLights(&io);
         setOrders(&io, &ele);
         moveTo(&ele, &io);
+        setObstruction(&ele);
     
         // if(elevio_stopButton()){
         //     elevio_motorDirection(DIRN_STOP);

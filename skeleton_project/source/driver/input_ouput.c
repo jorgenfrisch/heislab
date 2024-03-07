@@ -84,30 +84,37 @@ void freeOrderArray(IO *io) {
 
 void stopButtonpressed(IO *io, struct elevator *ele){
     if(elevio_floorSensor() != -1 && elevio_stopButton()){
+        for(int i = 0; i < N_BUTTONS; i++){
+            for(int y = 0; y<N_FLOORS; y++){
+                elevio_buttonLamp(y,i,0);
+        }
+    }
         freeOrderArray(io);
         ele->doorOpen=1;
         elevio_doorOpenLamp(1);
         elevio_stopLamp(1);
-        ele->motorDir = DIRN_STOP;
-        elevio_motorDirection(ele->motorDir);
+        elevio_motorDirection(DIRN_STOP);
         while(elevio_stopButton()){
-            printf("stop button:%d", elevio_stopButton());
         }
         elevio_stopLamp(0);
         ele->t = time(NULL);
-        printf("Før while");
+ 
         ele->clock = time(NULL);
         while(!checkTimer(ele->clock,ele->t)){
             ele->clock = time(NULL);
         }
-        printf("Etter while");
+  
         elevio_doorOpenLamp(0);
         ele->doorOpen=0;
     }
     if(elevio_stopButton() && elevio_floorSensor() == -1){
+        for(int i = 0; i < N_BUTTONS; i++){
+            for(int y = 0; y<N_FLOORS; y++){
+                elevio_buttonLamp(y,i,0);
+        }
+    }
         freeOrderArray(io);
-        ele->motorDir = DIRN_STOP;
-        elevio_motorDirection(ele->motorDir);
+        elevio_motorDirection(DIRN_STOP);
         elevio_stopLamp(1);
         while(elevio_stopButton()){
             printf("stop button ikke i floor:%d", elevio_stopButton());
@@ -115,3 +122,15 @@ void stopButtonpressed(IO *io, struct elevator *ele){
         elevio_stopLamp(0);
     }
 }
+
+/* 
+void obstructionButtonPressed(IO *io, struct elevator *ele){
+    if(elevio_obstruction()){
+        ele->obstruction=1;
+        ele->t = time(NULL);
+        while(elevio_obstruction()){
+            ele->t = time(NULL);
+        }
+        ele->obstruction=0;
+    }
+} */

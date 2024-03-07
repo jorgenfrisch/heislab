@@ -65,14 +65,20 @@ void moveTo(struct elevator *ele, IO *io){
         
     } 
 
-    if (ele->currentFloor == target && ele->doorOpen==0){
+    if (ele->currentFloor == target && ele->doorOpen==0 && elevio_floorSensor()!=-1){
         ele->motorDir = DIRN_STOP;
         doorOpens(ele);
+        if(ele->obstruction==1){
+            timerStart(ele);
+        }
 
         for(int i = 0; i < io->size; i++){
-            if(io->orderArray[i]->floor == target && i<io->size){
+            if(io->orderArray[i]->floor == target && i<= io->size){
                 turnOfButtonLight(io, io->orderArray[i], ele);
                 removeOrder(io, i);
+                i--;
+                printOrderArray(io);
+                printf("Target:%d", target);
             }
         } 
         //printf(" dooropen2:%d checktimer : %d ", ele->doorOpen, checkTimer(ele->clock,ele->t) );
@@ -84,6 +90,8 @@ void moveTo(struct elevator *ele, IO *io){
     if(ele->doorOpen == 1 && checkTimer(ele->clock,ele->t)){
         elevio_doorOpenLamp(0);
         ele->doorOpen=0;
+    } else if(ele->doorOpen == 1 && ele->obstruction==1){
+        timerStart(ele);
     }
 }
 
