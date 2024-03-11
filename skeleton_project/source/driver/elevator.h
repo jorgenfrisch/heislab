@@ -6,8 +6,8 @@
 #include <stdbool.h>
 #include "elevio.h"
 
-
-struct elevator{
+struct elevator
+{
     int currentFloor;
     MotorDirection motorDir;
     int doorOpen;
